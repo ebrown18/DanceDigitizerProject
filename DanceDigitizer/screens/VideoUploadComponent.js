@@ -198,6 +198,7 @@ const VideoUploadComponent = () => {
       <>
         <StartingTimeStampSelection handleGetTimeStamp={handleStartingTimeStamp} />
         <TextButton buttonPrompt="Upload a different video" onPress={handleReUploadPress} />
+
       </>
 }
       {startingTimeStamp && selectedVideo && (

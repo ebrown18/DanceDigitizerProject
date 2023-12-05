@@ -3,8 +3,7 @@ import { View, Button, Text, StyleSheet, Dimensions } from 'react-native';
 import { Video } from 'expo-av';
 import { PageHeader } from './components/PageHeader';
 
-const StartingTimeStampSelection = ({handleGetTimeStamp}) => {
-  console.log("Inside starting time stamp selection")
+const StartingTimeStampSelection = ({ handleGetTimeStamp }) => {
   const videoRef = useRef(null);
   const [currentTimestamp, setCurrentTimestamp] = useState(null);
 
@@ -12,21 +11,22 @@ const StartingTimeStampSelection = ({handleGetTimeStamp}) => {
     if (videoRef.current) {
       const status = await videoRef.current.getStatusAsync();
       const currentTimestamp = status.positionMillis / 1000; // Convert to seconds
-      handleGetTimeStamp(currentTimestamp)
+      handleGetTimeStamp(currentTimestamp);
     }
   };
 
   return (
     <View style={styles.container}>
-      <PageHeader headerText={"Video"}/>
+      <PageHeader headerText={"Video"} />
       <Video
         ref={videoRef}
-        source={require("/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4")}
+        source={{
+          uri: '/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4',
+        }}        
         useNativeControls
         style={styles.video}
       />
       <Button title="Click here when the video is at the one count before the first count of dancing" onPress={handleButtonPress} />
-
     </View>
   );
 };
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
   },
   video: {
     width: screenWidth,
-    height: screenHeight*.8 
-  }
+    height: screenHeight * 0.8,
+  },
 });
 
 export default StartingTimeStampSelection;
