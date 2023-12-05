@@ -4,25 +4,21 @@ import { Video } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
 import { Dimensions } from 'react-native';
 import NotesBox from "./NotesBox";
-import StartingTimeStampSelection from "./StartingTimeStampSelection.js"; // Import NotesBox component
 import { PageHeader } from "./components/PageHeader.js";
 import { InputText } from "./components/InputText.js";
 import TextButton from "./components/TextButton.js";
 import { useNavigation } from '@react-navigation/native';
-
-
+import StartingTimeStampSelection from "./StartingTimeStampSelection.js"; // Import NotesBox component
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const VideoUploadComponent = () => {
   const [updatePlaybackStatus, setUpdatePlaybackStatus] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [startingTimeStamp, setStartingTimeStamp] = useState()
+  const [startingTimeStamp, setStartingTimeStamp] = useState();
   const [videoName, setVideoName] = useState('');
   const [creatorName, setCreatorName] = useState('');
   const navigation = useNavigation();
-
-
   const video = useRef(null);
   
 
@@ -50,60 +46,49 @@ const VideoUploadComponent = () => {
 
 
   const handleUploadVideo = async () => {
-    console.log("StartingTimeStamp:");
-    console.log(startingTimeStamp);
-    console.log("Inside handleUploadVideo");
-  
-    let selectedVideoUri;
+    console.log(startingTimeStamp)
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
-      }); 
+      });
+  
+      let selectedVideoUri;
   
       if (!result.canceled) {
         selectedVideoUri = result.uri;
-        console.log("User selected video");
       } else {
         selectedVideoUri = "/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4";
-        console.log("Default Video selected");
       }
+      
+      
   
     } catch (err) {
       console.error('Error selecting/uploading video:', err);
     }
-  
-    if (selectedVideoUri !== undefined && selectedVideoUri !== null) {
-      console.log("before set selected");
-      console.log("Video to be selected:")
-      console.log(selectedVideoUri)
-      setSelectedVideo(video);
-      console.log("Set selected video");
-    }
+    setSelectedVideo(require("/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4"))
+
   };
-  
 
 
   const uploadVideo = async (videoUri,startingStamp) => {
     try {
-      console.log("Inside uploadVideo")
       const formData = new FormData();
+      console.log(videoUri)
       formData.append('video', {
-        uri: videoUri,
+        uri: "/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4",
         type: 'video/mp4',
         name: 'test.mp4',
       });
-      console.log("Video URI:")
-      console.log(videoUri)
       formData.append('startingStamp',startingStamp)
   
       const response = await fetch('http://127.0.0.1:5001/process_mp3', {
         method: 'POST',
         body: formData,
         headers: {
-          'Content-Type': 'multipart/form-data', 
+          'Content-Type': 'multipart/form-data',
         },
       });
   
@@ -125,7 +110,7 @@ const VideoUploadComponent = () => {
 
   const seekTo = (timestamp) => {
     // Assuming VideoPlayer.seekTo is a function to seek to a specific timestamp
-    console.log("Timestamp:")
+    console.log("here")
     console.log(timestamp)
     video.current?.setPositionAsync(parseInt(timestamp));
   };
@@ -209,12 +194,12 @@ const VideoUploadComponent = () => {
   return (
   
     <View style={styles.container}>
-      {!startingTimeStamp && selectedVideo  && (
-      <StartingTimeStampSelection 
-      handleGetTimeStamp = {handleStartingTimeStamp} 
-      selectedVideo = {selectedVideo}
-      />
-      )}
+      {!startingTimeStamp && selectedVideo  && 
+      <>
+        <StartingTimeStampSelection handleGetTimeStamp={handleStartingTimeStamp} />
+        <TextButton buttonPrompt="Upload a different video" onPress={handleReUploadPress} />
+      </>
+}
       {startingTimeStamp && selectedVideo && (
         <Video
           ref={video}
@@ -226,18 +211,17 @@ const VideoUploadComponent = () => {
           onPlaybackStatusUpdate={handleVideoStatusUpdate}
         />
       ) }
-      <InputText prompt="Video Name" onSave={(inputValue) => setVideoName(inputValue)} />
-      <InputText prompt="Creator Name" onSave={(inputValue) => setCreatorName(inputValue)} />
-      <PageHeader headerText = "" />
-      <PageHeader headerText = "" />
-      <PageHeader headerText = "" />
-      <TextButton buttonPrompt = "Upload a different video" onPress={handleReUploadPress} />
 
-
-
+      
       {!startingTimeStamp && !selectedVideo &&(
-        
-        <Button title="Upload Video" onPress={handleUploadVideo} />
+        <>
+          <InputText prompt="Video Name" onSave={(inputValue) => setVideoName(inputValue)} />
+          <InputText prompt="Creator Name" onSave={(inputValue) => setCreatorName(inputValue)} />
+          <PageHeader headerText="" />
+          <PageHeader headerText="" />
+          <PageHeader headerText="" />
+          <Button title="Upload Video" onPress={handleUploadVideo} />
+        </>
       )}
       {startingTimeStamp && selectedVideo && <Button title="Next count" onPress={handleNextCount} />}
       {startingTimeStamp  && selectedVideo && (

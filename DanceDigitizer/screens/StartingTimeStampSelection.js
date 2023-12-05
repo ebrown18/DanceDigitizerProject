@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { View, Button, Text, StyleSheet, Dimensions } from 'react-native';
 import { Video } from 'expo-av';
+import { PageHeader } from './components/PageHeader';
 
-const StartingTimeStampSelection = ({ handleGetTimeStamp, selectedVideo }) => {
+const StartingTimeStampSelection = ({handleGetTimeStamp}) => {
   console.log("Inside starting time stamp selection")
   const videoRef = useRef(null);
   const [currentTimestamp, setCurrentTimestamp] = useState(null);
 
   const handleButtonPress = async () => {
-    console.log("Inside handleButtonPress")
     if (videoRef.current) {
       const status = await videoRef.current.getStatusAsync();
       const currentTimestamp = status.positionMillis / 1000; // Convert to seconds
@@ -18,9 +18,10 @@ const StartingTimeStampSelection = ({ handleGetTimeStamp, selectedVideo }) => {
 
   return (
     <View style={styles.container}>
+      <PageHeader headerText={"Video"}/>
       <Video
         ref={videoRef}
-        source={selectedVideo}
+        source={require("/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4")}
         useNativeControls
         style={styles.video}
       />
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
   video: {
     width: screenWidth,
-    height: screenHeight * 0.8,
+    height: screenHeight*.8 
   }
 });
 

@@ -3,7 +3,6 @@
 import React, { useState,useRef} from "react";
 import VideoUploadComponent from "./VideoUploadComponent"; // Import your video player component
 import NotesBox from "./NotesBox"; // Import NotesBox component
-import { PageHeader } from "./components/PageHeader";
 import {
   StyleSheet,
   Text,
