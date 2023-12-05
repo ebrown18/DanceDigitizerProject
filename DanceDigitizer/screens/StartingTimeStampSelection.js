@@ -8,9 +8,12 @@ const StartingTimeStampSelection = ({ handleGetTimeStamp }) => {
   const [currentTimestamp, setCurrentTimestamp] = useState(null);
 
   const handleButtonPress = async () => {
+    console.log("Insting handle button press")
     if (videoRef.current) {
+      console.log("Inside if")
       const status = await videoRef.current.getStatusAsync();
       const currentTimestamp = status.positionMillis / 1000; // Convert to seconds
+      console.log("before handle get time stamp")
       handleGetTimeStamp(currentTimestamp);
     }
   };
@@ -20,9 +23,9 @@ const StartingTimeStampSelection = ({ handleGetTimeStamp }) => {
       <PageHeader headerText={"Video"} />
       <Video
         ref={videoRef}
-        source={{
-          uri: '/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4',
-        }}        
+        source={require(
+         '/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4',
+  )}        
         useNativeControls
         style={styles.video}
       />
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
   },
   video: {
     width: screenWidth,
-    height: screenHeight * 0.8,
+    height: screenHeight * 0.5,
   },
 });
 

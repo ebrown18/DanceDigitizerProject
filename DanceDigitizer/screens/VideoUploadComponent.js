@@ -60,7 +60,7 @@ const VideoUploadComponent = () => {
       if (!result.canceled) {
         selectedVideoUri = result.uri;
       } else {
-        selectedVideoUri = "/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4";
+        selectedVideoUri = '/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4';
       }
       
       
@@ -68,21 +68,24 @@ const VideoUploadComponent = () => {
     } catch (err) {
       console.error('Error selecting/uploading video:', err);
     }
-    setSelectedVideo(require("/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4"))
+    setSelectedVideo(require('/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4'))
 
   };
 
 
   const uploadVideo = async (videoUri,startingStamp) => {
+    console.log("Inside uploadVideo");
     try {
       const formData = new FormData();
+      console.log("Video URI")
       console.log(videoUri)
       formData.append('video', {
-        uri: "/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4",
+        uri: '/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/s3.mp4',
         type: 'video/mp4',
         name: 'test.mp4',
       });
       formData.append('startingStamp',startingStamp)
+      console.log("Appended vid and time stamp")
   
       const response = await fetch('http://127.0.0.1:5001/process_mp3', {
         method: 'POST',
