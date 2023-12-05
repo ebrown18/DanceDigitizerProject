@@ -1,13 +1,24 @@
 import {StyleSheet, View} from 'react-native';
 import {PageHeader} from './components/PageHeader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useAuth } from './AuthContext';
+import TextButton from './components/TextButton';
+import { useNavigation } from '@react-navigation/native';
 
 export function Settings(){
     const insets = useSafeAreaInsets();
+    const navigation = useNavigation();
+
+  const {signOut } = useAuth
+    const handleSignoutPress = () => {
+      signOut;
+      navigation.navigate('SignUp');
+    };
 
     return (
         <View style={[styles.root, { paddingTop: insets.top }]}>
-          <PageHeader headerText="Settings" />
+          <TextButton buttonPrompt = "Sign Out" onPress={handleSignoutPress} />
+
         </View>
       );
     }

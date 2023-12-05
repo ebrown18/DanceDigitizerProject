@@ -4,14 +4,13 @@ import {InputText} from './components/InputText';
 import {ContentEntry} from './components/ContentEntry';
 import {BottomButtons} from './components/BottomButtons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-
+import { useAuth } from './AuthContext';
 
 export function Favorites(){
     const insets = useSafeAreaInsets();
 
     return (
         <View style={[styles.root, { paddingTop: insets.top }]}>
-          <PageHeader headerText="Favorites" />
           <InputText prompt="Search" onSave={(inputValue) => {
             // Add logic to save inputValue to the database
             console.log(`Saved ${inputValue} to the database`);

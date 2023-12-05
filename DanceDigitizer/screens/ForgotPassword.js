@@ -6,7 +6,7 @@ import {InputText} from './components/InputText';
 import { BodyText } from './components/BodyText';
 import { useSafeAreaInsets} from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-
+import { useAuth } from './AuthContext';
 export function ForgotPassword() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();

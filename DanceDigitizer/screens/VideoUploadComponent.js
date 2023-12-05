@@ -5,6 +5,12 @@ import * as ImagePicker from "expo-image-picker";
 import { Dimensions } from 'react-native';
 import NotesBox from "./NotesBox";
 import StartingTimeStampSelection from "./StartingTimeStampSelection.js"; // Import NotesBox component
+import { PageHeader } from "./components/PageHeader.js";
+import { InputText } from "./components/InputText.js";
+import TextButton from "./components/TextButton.js";
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -12,6 +18,11 @@ const VideoUploadComponent = () => {
   const [updatePlaybackStatus, setUpdatePlaybackStatus] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [startingTimeStamp, setStartingTimeStamp] = useState()
+  const [videoName, setVideoName] = useState('');
+  const [creatorName, setCreatorName] = useState('');
+  const navigation = useNavigation();
+
+
   const video = useRef(null);
   
 
@@ -52,8 +63,10 @@ const VideoUploadComponent = () => {
   
       if (!result.canceled) {
         selectedVideoUri = result.uri;
+        console.log("User selected video");
       } else {
         selectedVideoUri = "/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4";
+        console.log("Default Video selected");
       }
       
       
@@ -61,27 +74,28 @@ const VideoUploadComponent = () => {
     } catch (err) {
       console.error('Error selecting/uploading video:', err);
     }
-    setSelectedVideo(require("/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4"))
-
+    setSelectedVideo(selectedVideoUri);
+    console.log("set");
   };
 
 
   const uploadVideo = async (videoUri,startingStamp) => {
     try {
       const formData = new FormData();
-      console.log(videoUri)
       formData.append('video', {
-        uri: "/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4",
+        uri: videoUri,
         type: 'video/mp4',
         name: 'test.mp4',
       });
+      console.log("Video URI:")
+      console.log(videoUri)
       formData.append('startingStamp',startingStamp)
   
       const response = await fetch('http://127.0.0.1:5001/process_mp3', {
         method: 'POST',
         body: formData,
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data', 
         },
       });
   
@@ -176,6 +190,14 @@ const VideoUploadComponent = () => {
 
   }
 
+  const handleReUploadPress = () => {
+    setSelectedVideo(null);
+    setStartingTimeStamp(null);
+    setVideoName('');
+    setCreatorName('');
+    navigation.navigate("UploadStack");
+  }
+
   return (
   
     <View style={styles.container}>
@@ -191,7 +213,17 @@ const VideoUploadComponent = () => {
           onPlaybackStatusUpdate={handleVideoStatusUpdate}
         />
       ) }
+      <InputText prompt="Video Name" onSave={(inputValue) => setVideoName(inputValue)} />
+      <InputText prompt="Creator Name" onSave={(inputValue) => setCreatorName(inputValue)} />
+      <PageHeader headerText = "" />
+      <PageHeader headerText = "" />
+      <PageHeader headerText = "" />
+      <TextButton buttonPrompt = "Upload a different video" onPress={handleReUploadPress} />
+
+
+
       {!startingTimeStamp && !selectedVideo &&(
+        
         <Button title="Upload Video" onPress={handleUploadVideo} />
       )}
       {startingTimeStamp && selectedVideo && <Button title="Next count" onPress={handleNextCount} />}
