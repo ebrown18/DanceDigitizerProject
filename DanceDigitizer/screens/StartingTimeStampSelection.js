@@ -21,7 +21,7 @@ const StartingTimeStampSelection = ({ handleGetTimeStamp }) => {
       <Video
         ref={videoRef}
         source={{
-          uri: '/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4',
+          uri: '/Users/ellianabrown/Downloads/sample3.mp4',
         }}        
         useNativeControls
         style={styles.video}
