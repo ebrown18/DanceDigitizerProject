@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontStyle: 'normal',
     fontWeight: '500',
-    lineHeight: 24,
+
   },
   input: {
     height: 40,

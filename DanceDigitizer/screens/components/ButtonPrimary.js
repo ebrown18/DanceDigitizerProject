@@ -22,11 +22,9 @@ const styles = StyleSheet.create({
   clickMe: {
     color: '#000000', 
     textAlign: 'center',
-    //fontFamily: 'Inter',
     fontSize: 16,
     fontStyle: 'normal',
     fontWeight: '600',
-    lineHeight: 20,
   },
 });
 

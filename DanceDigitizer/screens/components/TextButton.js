@@ -18,11 +18,10 @@ const styles = StyleSheet.create({
   },
   textButtonClick: {
     color: '#00cc00',
-    //fontFamily: 'Inter',
     fontSize: 16,
     fontStyle: 'normal',
     fontWeight: '600',
-    lineHeight: 'normal',
+
   },
 });
 

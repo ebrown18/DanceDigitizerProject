@@ -25,27 +25,23 @@ const styles = StyleSheet.create({
   left: {
     color: '#00cc00',
     textAlign: 'right',
-    fontFamily: 'Inter',
     fontSize: 16,
     fontStyle: 'normal',
     fontWeight: '500',
-    lineHeight: 'normal',
+
   },
   signUp: {
     color: '#202020',
     textAlign: 'center',
-    fontFamily: 'Inter',
     fontSize: 20,
     fontStyle: 'normal',
     fontWeight: '600',
-    lineHeight: 'normal',
+
   },
   right: {
     color: '#00cc00',
-    fontFamily: 'Inter',
     fontSize: 16,
     fontStyle: 'normal',
     fontWeight: '500',
-    lineHeight: 'normal',
   },
 });

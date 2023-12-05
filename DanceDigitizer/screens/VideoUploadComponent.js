@@ -50,16 +50,18 @@ const VideoUploadComponent = () => {
 
 
   const handleUploadVideo = async () => {
-    console.log(startingTimeStamp)
+    console.log("StartingTimeStamp:");
+    console.log(startingTimeStamp);
+    console.log("Inside handleUploadVideo");
+  
+    let selectedVideoUri;
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
-      });
-  
-      let selectedVideoUri;
+      }); 
   
       if (!result.canceled) {
         selectedVideoUri = result.uri;
@@ -68,19 +70,25 @@ const VideoUploadComponent = () => {
         selectedVideoUri = "/Users/ellianabrown/bigOof/DanceDigitizerProject/DanceDigitizer/assets/sample3.mp4";
         console.log("Default Video selected");
       }
-      
-      
   
     } catch (err) {
       console.error('Error selecting/uploading video:', err);
     }
-    setSelectedVideo(selectedVideoUri);
-    console.log("set");
+  
+    if (selectedVideoUri !== undefined && selectedVideoUri !== null) {
+      console.log("before set selected");
+      console.log("Video to be selected:")
+      console.log(selectedVideoUri)
+      setSelectedVideo(video);
+      console.log("Set selected video");
+    }
   };
+  
 
 
   const uploadVideo = async (videoUri,startingStamp) => {
     try {
+      console.log("Inside uploadVideo")
       const formData = new FormData();
       formData.append('video', {
         uri: videoUri,
@@ -117,7 +125,7 @@ const VideoUploadComponent = () => {
 
   const seekTo = (timestamp) => {
     // Assuming VideoPlayer.seekTo is a function to seek to a specific timestamp
-    console.log("here")
+    console.log("Timestamp:")
     console.log(timestamp)
     video.current?.setPositionAsync(parseInt(timestamp));
   };
@@ -201,7 +209,12 @@ const VideoUploadComponent = () => {
   return (
   
     <View style={styles.container}>
-      {!startingTimeStamp && selectedVideo  && <StartingTimeStampSelection handleGetTimeStamp = {handleStartingTimeStamp} />}
+      {!startingTimeStamp && selectedVideo  && (
+      <StartingTimeStampSelection 
+      handleGetTimeStamp = {handleStartingTimeStamp} 
+      selectedVideo = {selectedVideo}
+      />
+      )}
       {startingTimeStamp && selectedVideo && (
         <Video
           ref={video}

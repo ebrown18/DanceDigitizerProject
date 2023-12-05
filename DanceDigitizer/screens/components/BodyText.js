@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontStyle: 'normal',
     fontWeight: '500',
-    lineHeight: 'normal',
   },
 });
 

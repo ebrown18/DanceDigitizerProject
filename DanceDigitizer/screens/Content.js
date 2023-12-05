@@ -5,12 +5,24 @@ import { InputText } from './components/InputText';
 import { ContentEntry } from './components/ContentEntry';
 import { BottomButtons } from './components/BottomButtons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Video from './Video';
+import { Video } from 'expo-av';  // Change this line
 
 // Create a list of Video objects
 const videos = [
-  new Video("Dance Video 1", "Dance Video Description", "Person's name", "thumbnail1.jpg", "video1.mp4"),
-  new Video("Dance Video 2", "Another Description", "Another Creator", "thumbnail2.jpg", "video2.mp4"),
+  {
+    title: "Dance Video 1",
+    description: "Dance Video Description",
+    creator: "Person's name",
+    thumbnailImg: "thumbnail1.jpg",
+    videoLink: "video1.mp4",
+  },
+  {
+    title: "Dance Video 2",
+    description: "Another Description",
+    creator: "Another Creator",
+    thumbnailImg: "thumbnail2.jpg",
+    videoLink: "video2.mp4",
+  },
   // Add more videos as needed
 ];
 
@@ -36,7 +48,13 @@ const Content = () => {
             creator={video.creator}
             thumbnailImg={video.thumbnailImg}
             videoLink={video.videoLink}
-          />
+          >
+            <Video
+              source={{ uri: video.videoLink }}
+              style={{ width: 300, height: 200 }}
+              useNativeControls
+            />
+          </ContentEntry>
         ))}
       </ScrollView>
 
